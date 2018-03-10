@@ -1,0 +1,22 @@
+.list-group {
+    padding-top: 50px;
+}
+
+.form{
+    border: 1px solid #08f;
+    border-radius: 10px;
+    position: fixed;
+    background: #fff;
+    top:200px;
+    left: 200px;
+    margin: 0 auto;
+    z-index: 100;
+}
+.invisible {
+    display: none;
+}
+
+.form-group {
+    position: relative;
+    z-index: 105;
+}

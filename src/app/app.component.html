@@ -1,0 +1,221 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <button type="button" class="btn btn-primary" (click)="openForm()">Добавить событие</button>
+    </div>
+
+    <div class="col-md-4">
+      <div class="form-group">
+        <select required class="form-control" [(ngModel)]="typeFilter">
+          <option *ngFor="let tf of typesFilter">
+            {{tf}}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="form-group">
+        <select required class="form-control" [(ngModel)]="dateFilter">
+          <option *ngFor="let df of datesFilter">
+            {{df}}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div ngSwitch="{{typeFilter}}">
+  <div *ngSwitchCase="'-'">
+    <div class="list-group">
+
+      <div ngSwitch="{{dateFilter}}">
+        <div *ngSwitchCase="'-'">
+          <div class="list-group">
+            <app-event *ngFor="let d of datasEvent" [event]="d"></app-event>
+          </div>
+        </div>
+        <div *ngSwitchCase="'Новые'">
+          <div class="list-group">
+            <app-event *ngFor="let d of newDateEvent" [event]="d"></app-event>
+          </div>
+        </div>
+        <div *ngSwitchCase="'Старые'">
+          <div class="list-group">
+            <app-event *ngFor="let d of oldDateEvent" [event]="d"></app-event>
+          </div>
+        </div>
+        <div *ngSwitchDefault>
+          <div class="list-group">
+            <app-event *ngFor="let d of datasEvent" [event]="d"></app-event>
+          </div>
+        </div>
+      </div>
+      <!-- <app-event *ngFor="let d of datasEvent" [event]="d"></app-event> -->
+    </div>
+  </div>
+
+  <div *ngSwitchCase="'Новость'">
+    <div class="list-group">
+      <div ngSwitch="{{dateFilter}}">
+        <div *ngSwitchCase="'-'">
+          <div class="list-group">
+            <app-event *ngFor="let d of newsEvent" [event]="d"></app-event>
+          </div>
+        </div>
+        <div *ngSwitchCase="'Новые'">
+          <div class="list-group">
+            <app-event *ngFor="let d of newDateEvent1" [event]="d"></app-event>
+          </div>
+        </div>
+        <div *ngSwitchCase="'Старые'">
+          <div class="list-group">
+            <app-event *ngFor="let d of oldDateEvent1" [event]="d"></app-event>
+          </div>
+        </div>
+        <div *ngSwitchDefault>
+          <div class="list-group">
+            <app-event *ngFor="let d of newsEvent" [event]="d"></app-event>
+          </div>
+        </div>
+        <!-- <app-event *ngFor="let d of newsEvent" [event]="d"></app-event> -->
+      </div>
+    </div>
+  </div>
+  <div *ngSwitchCase="'Транзакция'">
+    <div class="list-group">
+
+      <div ngSwitch="{{dateFilter}}">
+        <div *ngSwitchCase="'-'">
+          <div class="list-group">
+            <app-event *ngFor="let d of finsEvent" [event]="d"></app-event>
+          </div>
+        </div>
+        <div *ngSwitchCase="'Новые'">
+          <div class="list-group">
+            <app-event *ngFor="let d of newDateEvent2" [event]="d"></app-event>
+          </div>
+        </div>
+        <div *ngSwitchCase="'Старые'">
+          <div class="list-group">
+            <app-event *ngFor="let d of oldDateEvent2" [event]="d"></app-event>
+          </div>
+        </div>
+        <div *ngSwitchDefault>
+          <div class="list-group">
+            <app-event *ngFor="let d of finsEvent" [event]="d"></app-event>
+          </div>
+        </div>
+
+      </div>
+      <!-- <app-event *ngFor="let d of finsEvent" [event]="d"></app-event> -->
+    </div>
+  </div>
+  <div *ngSwitchDefault>
+    <div class="list-group">
+
+      <div ngSwitch="{{dateFilter}}">
+        <div *ngSwitchCase="'-'">
+          <div class="list-group">
+            <app-event *ngFor="let d of datasEvent" [event]="d"></app-event>
+          </div>
+        </div>
+        <div *ngSwitchCase="'Новые'">
+          <div class="list-group">
+            <app-event *ngFor="let d of newDateEvent" [event]="d"></app-event>
+          </div>
+        </div>
+        <div *ngSwitchCase="'Старые'">
+          <div class="list-group">
+            <app-event *ngFor="let d of oldDateEvent" [event]="d"></app-event>
+          </div>
+        </div>
+        <div *ngSwitchDefault>
+          <div class="list-group">
+            <app-event *ngFor="let d of datasEvent" [event]="d"></app-event>
+          </div>
+        </div>
+
+      </div>
+      <!-- <app-event *ngFor="let d of datasEvent" [event]="d"></app-event> -->
+    </div>
+  </div>
+</div>
+
+
+<form (ngSubmit)="submitForm(form)" class="col-md-3 col-md-offset-6 form" [ngClass]="{invisible: visibility}" #form="ngForm">
+
+  <div class="form-group">
+    <label>Тип события</label>
+    <select required class="form-control" name="type" [(ngModel)]="type">
+      <option *ngFor="let t of types">
+        {{t}}
+      </option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>Дата</label>
+    <input required class="form-control" type="date" name="date" [(ngModel)]="date" />
+  </div>
+
+  <div *ngIf="type === 'Новость'; else elseTemplate">
+
+    <div class="form-group">
+      <label>Заголовок</label>
+      <input required class="form-control" name="title" [(ngModel)]="title" />
+    </div>
+    <div class="form-group">
+
+      <label>Содержание</label>
+      <textarea required class="form-control" name="descriptionN" [(ngModel)]="descriptionN"></textarea>
+    </div>
+  </div>
+
+  <ng-template #elseTemplate>
+
+    <div class="form-group">
+      <label>Приход\Расход</label>
+      <select required class="form-control" name="operation" [(ngModel)]="operation">
+        <option *ngFor="let oper of operations">
+          {{oper}}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Сумма</label>
+      <input required class="form-control" type="number" name="sum" [(ngModel)]="sum" />
+    </div>
+
+    <div class="form-group">
+      <label>Валюта</label>
+      <select required class="form-control" name="currency" [(ngModel)]="currency">
+        <option *ngFor="let c of currencys">
+          {{c}}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>От кого</label>
+      <input required class="form-control" name="from" [(ngModel)]="from" />
+    </div>
+
+    <div class="form-group">
+      <label>Описание</label>
+      <textarea required class="form-control" name="descriptionF" [(ngModel)]="descriptionF"></textarea>
+    </div>
+  </ng-template>
+
+  <div class="form-group">
+    <button class="btn btn-primary" type="submit" (click)="addEvent(type, title, descriptionN, date, operation, sum, currency, from, descriptionF)"
+      (click)="openForm()" [disabled]="!form.valid">Добавить</button>
+  </div>
+
+
+  
+</form>

@@ -1,0 +1,88 @@
+<a href="#" class="list-group-item list-group-item-action col-md-12" (click)="openForm()" [ngClass]="{colorEvent: colorBg}">
+  <div *ngIf="event.title !== undefined && event.title !== null; else financial">{{event.title}} <span>{{event.date}} </span></div>
+  <ng-template #financial>
+    <span class="operGreen" *ngIf="event.operation === 'Приход'; else operTemplate">
+      + {{event.sum}} {{event.currency}}
+    </span>
+    <ng-template #operTemplate>
+      <span class="operRed">- {{event.sum}} {{event.currency}}</span>
+    </ng-template>
+
+    <span>{{event.date}} </span> {{event.from}}
+  </ng-template>
+</a>
+
+<form class="col-md-3 col-md-offset-3 form" [ngClass]="{invisible: visibility}">
+
+  <div class="form-group">
+    <label>Тип события:</label>
+    <p>{{event.type}}</p>
+  </div>
+
+  <div class="form-group">
+    <label>Дата:</label>
+    <p>{{event.date}}</p>
+  </div>
+
+  <div *ngIf="event.type === 'Новость'; else elseTemplate">
+
+    <div class="form-group">
+      <label>Заголовок:</label>
+      <p>{{event.title}}</p>
+    </div>
+
+    <div class="form-group">
+      <label>Содержание:</label>
+      <p>{{event.descriptionN}}</p>
+    </div>
+
+
+    <div class="form-check">
+      <input type="checkbox" class="form-check-input" id="Check1" (click)="changeColor()">
+      <label class="form-check-label">Ознакомлен</label>
+    </div>
+
+    <div class="form-group">
+      <button class="btn btn-primary" type="submit" (click)="openForm()">Закрыть</button>
+    </div>
+
+  </div>
+  <ng-template #elseTemplate>
+
+    <div class="form-group">
+      <label>Операция:</label>
+      <p>{{event.operation}}</p>
+    </div>
+
+    <div class="form-group">
+      <label>Сумма:</label>
+      <p>{{event.sum}}</p>
+    </div>
+
+    <div class="form-group">
+      <label>Валюта:</label>
+      <p>{{event.currency}}</p>
+    </div>
+
+    <div class="form-group">
+      <label>От кого:</label>
+      <p>{{event.from}}</p>
+    </div>
+
+    <div class="form-group">
+      <label>Описание:</label>
+      <p>{{event.descriptionF}}</p>
+    </div>
+
+    <div class="form-group">
+      <button class="btn btn-danger" type="submit" (click)="openForm()" >Удалить</button>
+    </div>
+
+    <div class="form-group">
+      <button class="btn btn-primary" type="submit" (click)="openForm()">Закрыть</button>
+    </div>
+  </ng-template>
+
+
+
+</form>
